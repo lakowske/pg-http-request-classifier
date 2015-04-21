@@ -1,0 +1,33 @@
+{
+  "name": "pg-http-request-classifier",
+  "version": "0.0.1",
+  "description": "Classify http requests on a Postgres database",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lakowske/pg-http-request-classifier"
+  },
+  "keywords": [
+    "classify",
+    "Postgres",
+    "http",
+    "request"
+  ],
+  "author": "Seth Lakowske",
+  "license": "GPLv2",
+  "bugs": {
+    "url": "https://github.com/lakowske/pg-http-request-classifier/issues"
+  },
+  "homepage": "https://github.com/lakowske/pg-http-request-classifier",
+  "dependencies": {
+    "node-uuid": "^1.4.3",
+    "pg": "^4.3.0",
+    "pg-http-request-logger": "file:../../../var/folders/gk/dcd9vx2n3yqbfmtnjshrch6r0000gp/T/npm-29297-7bef573e/git-cache-25480b0f89e9/354faeca7a63205d28b93b8f630e1e41eb076b2b"
+  },
+  "devDependencies": {
+    "tape": "^4.0.0"
+  }
+}
