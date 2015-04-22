@@ -45,21 +45,24 @@ test('can classify request', function(t) {
         pgReqClassify.insertClass(client, { request_id:id, user_id:'robotron', clazz:'PrimaryReq'}, callback)
     }
 
-    var finish = function(client, callback, id, err, result) {
-        t.ok(id, 'verify id');
-        if (err) {
-            console.log(err);
-        }
-        client.end();
-        t.end();
-    }
     connectOrFail(t, function(client) {
-        pgReqClassify.chain(client, [pgReqClassify.classTable, req1, class1, finish], 0);
+        pgReqClassify.chain(client, [pgReqClassify.classTable, req1, class1, pgReqClassify.dropClassTable, pgReqLogger.dropRequestTable, finish(t)], 0);
     })
 })
 
-function finish(t, rows)  {
+function finish(t)  {
     return function(client, callback, err, result) {
+        if (err) {
+            console.log(err);
+        }
+        t.ok(result, 'verify result');
+        client.end();
+        t.end();
+    }
+}
+
+function verify(t, rows) {
+   return function(client, callback, err, result) {
         if (err) {
             console.log(err);
         }
@@ -67,8 +70,7 @@ function finish(t, rows)  {
         if (rows) {
             t.equal(result.rowCount, rows);
         }
-        client.end();
-        t.end();
+       callback(err, result);
     }
 }
 
@@ -93,10 +95,17 @@ test('can query for unclassified requests', function(t) {
     }
 
     var query = function(client, callback) {
-        pgReqClassify.nextRequest(client, 'seth', 2, callback);
+        pgReqClassify.nextRequest(client, 'seth', 1, callback);
     }
 
     connectOrFail(t, function(client) {
-        pgReqClassify.chain(client, [pgReqLogger.requestTable, pgReqClassify.classTable, req1, class1, req2, class2, query, finish(t, 2)], 0);
+        pgReqClassify.chain(client, [pgReqLogger.requestTable,
+                                     pgReqClassify.classTable,
+                                     req1, class1,
+                                     req2, class2,
+                                     query, verify(t, 1),
+                                     pgReqClassify.dropClassTable, pgReqLogger.dropRequestTable,
+                                     finish(t)],
+                            0);
     })
 })
