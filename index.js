@@ -14,7 +14,7 @@ function classTable(client, callback) {
             + 'class_time timestamptz default current_timestamp,'
             + 'request_id text references requests(request_id) not null,'
             + 'user_id text not null,'
-            + 'class text not null'
+            + 'clazz text not null'
             + ')'
 
         console.log(createClasses);
@@ -31,11 +31,11 @@ function classTable(client, callback) {
  */
 function insertClass(client, clazz, callback) {
 
-    var insertClass = 'insert into classes (class_id, request_id, user_id, class) VALUES ($1, $2, $3, $4)';
+    var insertClass = 'insert into classes (class_id, request_id, user_id, clazz) VALUES ($1, $2, $3, $4)';
 
     var id = clazz.class_id;
     if (id === undefined) id = uuid.v4();
-
+    console.log(clazz);
     client.query(insertClass,
                  [id,
                   clazz.request_id,
