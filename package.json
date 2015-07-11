@@ -25,7 +25,7 @@
   "dependencies": {
     "node-uuid": "^1.4.3",
     "pg": "^4.3.0",
-    "pg-http-request-logger": "git+ssh://git@github.com:lakowske/pg-http-request-logger.git"
+    "pg-http-request-logger": "https://github.com/lakowske/pg-http-request-logger"
   },
   "devDependencies": {
     "tape": "^4.0.0"
